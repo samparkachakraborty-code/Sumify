@@ -52,9 +52,10 @@
             margin: 0;
             height: 100vh;
             border-radius: 5% 5% 0 0;
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            width: 100%;
+	    display: grid;
+	    grid-template-columns: 2fr 1fr;
+
+                       width: 100%;
         }
 
         .uploadBtns {
@@ -68,7 +69,7 @@
             border: 1px solid #E5E9FF;
             border-radius: 10%;
             color: #758CFF;
-            display: grid;
+            display: block;
             grid-template-columns: 1fr 2fr;
             align-items: center;
 
@@ -80,9 +81,52 @@
 
         #mainArea input {
             width: 70%;
-            height: 90%;
+            height: 70vh;
+	   justify-self: center;
         }
+    #sidebar{
+               display: grid;
+		grid-template-rows: fit-content(100%) fit-content(100%);
+		align-self: center;
+		justify-content: center;
+		background-color: white;
+		margin-top: 5vh;
+	}
 
+  #selection{   display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		justify-items: center;
+		align-items: top;
+		background-color: #3556FF;
+		color: white;
+		height: 50px;
+		border-radius: 25px;
+		border: 1px solid #3556FF;
+	}
+#selection button{
+		width: 100%;
+		background-color: #3556FF;
+		color: white;
+		border: none;
+		height: 50px;
+		border-radius: 25px;
+	}
+#selection button:hover{
+		width: 100%;
+		background-color: white;
+		color: #3556FF;
+		border: none;
+	}
+  #sidebar .uploadBtns{
+		background-color: #3556FF;
+		color: white;
+		height: 50px;
+                border-radius: 25px;
+		height: 70px;
+		padding:0 20px;
+		margin: 2vh 0;
+	}
+		
         @media (max-width: 1000px) {
             #logo span {
                 font-size: 9vw;
@@ -119,20 +163,25 @@
             }
 
             .uploadBtns {
-                width: 70%;
-                height: auto;
-                height: 20vw;
-                font-size: 3vw;
+                width: 80%; 
+                font-size: 3vw; 
             }
 
             #upPdf {
-                grid-row: 1;
-                grid-column: 1;
+              		display: block;
+			width: 70%;
+			
             }
-
-            #upTxt {
-                grid-column: 1;
-                grid-row: 2;
+  #sidebar .uploadBtns{
+	        width: 100%;
+		background-color: #3556FF;
+		color: white;
+		height: 70px;
+		
+            #upTxt{
+		height: 50vh;
+		width: 95 vw;
+                
             }
         }
     </style>
@@ -149,20 +198,42 @@
                 <div id="leftMenu">
                 </div>
             </header>
+                
             <div id="mainBtns">
-                <div id="sidebar"> <button id="upPdf" class="uploadBtns"><img src="assets/uploadPdf.png" /> Upload A PDF
-                        To
-                        Summarizze</button>
+            <div id="mainArea">
+                    <input type="textarea" id="upTxt" class="uploadBtns" />
                 </div>
-                <div id="mainArea">
-                    <input type="textarea" class="uploadBtns" />
+	<div id="sidebar">
+	        <div id="selection" class=="uploadBtns">
+		<button>Short</button>
+                <button>Medium</button>
+                <button>Long</button>
+
+	        </div>
+		<button id="upPdf" class="uploadBtns">Upload Text To Summarize</button>
                 </div>
+
 
 
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="js/main.js"></script
+    <script type="text/javascript">
+	
+	let selectionState = "short";
+	const textField = document.getElementById("upTxt");
+	const uploadBtn = document.getElementById("upPdf");
+	uploadBtn.addEventListener("click", async ()=>{
+	 let text = textField.value;
+	 console.log(text);
+	let response = await fetch("http://127.0.0.1:5000/short", {
+	  method: "POST",
+	  body: text,
+	  });
+	 console.log(response);
+        
+	});
+</script>
 </body>
 
 </html>
