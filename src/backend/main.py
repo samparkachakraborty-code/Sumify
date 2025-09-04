@@ -1,7 +1,7 @@
 import ollama   #llm model
 
 from flask import Flask, request, render_template
-app = Flask("short") 
+app = Flask("main") 
 @app.route("/")
 def hello_world():
     return render_template('index.html')
