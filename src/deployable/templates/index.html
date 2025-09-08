@@ -89,6 +89,7 @@
             display: grid;
             grid-template-columns: 1fr 2fr;
             align-items: center;
+	    text-decoration: None;
             
         }
         .uploadBtns img{
@@ -128,14 +129,17 @@
                 height: auto;
                 height: 20vw;
                 font-size: 3vw;
+		text-decoration: none;
                         }
             #upPdf{
                grid-row: 1;
                grid-column: 1;
+               text-decoration: none;
             }
             #upTxt{
                 grid-column: 1;
                 grid-row: 2;
+		text-decoration: none;
             }
         }
 
@@ -148,27 +152,27 @@
         <div id="header">
             <header>
                 <div id="logo">
-                    <img src="assets/logo.png" style=; float:left; margin-right:0; padding-right:0;" />
+                      <img src="{{ url_for('static', filename='logo.png') }}" alt="My Image"  style= "float:left; margin-right:0; padding-right:0;">
                     <span style=" margin-left: 0; padding-left:0;">Sumify</span>
                 </div>
                 <div id="leftMenu">
                 </div>
             </header>
             <div id="hero">
-                <img src="assets/hero.png" />
+					<img src="{{ url_for('static', filename='hero.png') }}"/>
                 <span>You AI Powered Text Summarizer</span>
             </div>
         </div>
         <div id="mainBtns">
-            <button id="upPdf" class="uploadBtns"><img src="assets/uploadPdf.png"/> Upload A PDF To Summarizze</button>
-            <button id="upTxt" class="uploadBtns"><img src="assets/uploadText.png"/> Add Text To Summarize</button>
+				<a id="upPdf" class="uploadBtns"><img src="{{ url_for('static', filename='uploadPdf.png')}}"/> Upload A PDF To Summarizze</a>
+				<a id="upTxt" class="uploadBtns" action="/uploadtext" href="/uploadtext"><img src="{{ url_for('static', filename='uploadText.png')}}"/> Add Text To Summarize</a>
 
         </div>
     </div>
     </div>
 <script type="text/javascript"">
 
-</script
+</script>
 </body>
 
 </html>

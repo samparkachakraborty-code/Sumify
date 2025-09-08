@@ -54,7 +54,7 @@
             border-radius: 5% 5% 0 0;
 	    display: grid;
 	    grid-template-columns: 2fr 1fr;
-            padding-top: 3vh;
+
                        width: 100%;
         }
 
@@ -82,8 +82,11 @@
         #mainArea input {
             width: 70%;
             height: 70vh;
-	    margin-top: 10%;
 	   justify-self: center;
+	   margin: 10px;
+	  overflow: wrap;
+	   overflow-wrap: break-word;
+	  white-space: normal;
         }
     #sidebar{
                display: grid;
@@ -118,6 +121,13 @@
 		color: #3556FF;
 		border: none;
 	}
+#selection button:active{
+		width: 100%;
+		background-color: white;
+		color: #3556FF;
+		border: none;
+	}
+
   #sidebar .uploadBtns{
 		background-color: #3556FF;
 		color: white;
@@ -135,7 +145,7 @@
 
             #hero {
                 grid-template-columns: 1fr;
-                grid-template-rows: auto auto;
+                grid-template-rows: auto;
                 align-items: center;
 
             }
@@ -193,7 +203,7 @@
         <div id="header">
             <header>
                 <div id="logo">
-                    <img src="assets/logo.png" style=; float:left; margin-right:0; padding-right:0;" />
+		<img src="{{url_for('static',filename='logo.png')}}" style=; float:left; margin-right:0; padding-right:0;" />
                     <span style=" margin-left: 0; padding-left:0;">Sumify</span>
                 </div>
                 <div id="leftMenu">
@@ -202,13 +212,13 @@
                 
             <div id="mainBtns">
             <div id="mainArea">
-                    <input type="textarea" id="upTxt" class="uploadBtns" />
+						<input type="textarea" id="upTxt" class="uploadBtns" rows="50">Enter Your Text Here</input>
                 </div>
 	<div id="sidebar">
 	        <div id="selection" class=="uploadBtns">
-		<button>Short</button>
-                <button>Medium</button>
-                <button>Long</button>
+		<button onclick="selectionState='short'">Short</button>
+                <button onclick="selectionState='medium'">Medium</button>
+                <button onclick="selectionState='long'">Long</button>
 
 	        </div>
 		<button id="upPdf" class="uploadBtns">Upload Text To Summarize</button>
@@ -225,14 +235,26 @@
 	const textField = document.getElementById("upTxt");
 	const uploadBtn = document.getElementById("upPdf");
 	uploadBtn.addEventListener("click", async ()=>{
+	 console.log(selectionState);
 	 let text = textField.value;
+	 document.getElementById("mainBtns").remove();
+	const resultElement = document.createElement("p");
+	document.body.appendChild(resultElement);
+	resultElement.textContent = "Good Things Takes Time, Relax While We Summarize Your Text :)";
+
+	resultElement.style = "background-color: #F2F4FF; width: 70%; justify-self: center; align-self:center; padding: 10%; font-size: 150%; border: 1px solid  #F2F4FF; border-radius: 20px;;"
+	 
 	 console.log(text);
-	let response = await fetch("http://127.0.0.1:5000/short", {
+	let response = await fetch("http://127.0.0.1:5000/"+selectionState, {
 	  method: "POST",
 	  body: text,
-	  });
+		});
+	response = await response.text();
 	 console.log(response);
-        
+    
+	resultElement.textContent = response;
+
+	
 	});
 </script>
 </body>
