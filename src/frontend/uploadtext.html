@@ -388,7 +388,6 @@ body {
         <div id="header">
             <header>
                 <div id="logo">
-                    <img src="assets/logo.png" style=; float:left; margin-right:0; padding-right:0;" />
                     <span style=" margin-left: 0; padding-left:0;">Sumify</span>
                 </div>
                 <div id="leftMenu">
@@ -436,13 +435,19 @@ body {
 	}); */
 	uploadBtn.addEventListener("click", async ()=>{
 	 let text = textField.value;
-	 console.log(text);
-	let response = await fetch("http://127.0.0.1:5000/short", {
+	 document.getElementById("mainBtns").remove();
+	const resultElement = document.createElement("p");
+	document.body.appendChild(resultElement);
+	resultElement.textContent = "Good Things Takes Time, Relax While We Summarize Your Text :)";
+	resultElement.style = "background-color: #F2F4FF; width: 70%; justify-self: center; align-self:center; padding: 10%; font-size: 150%; border: 1px solid  #F2F4FF; border-radius: 20px;;"
+	let response =fetch("http://127.0.0.1:5000/"+selectionState, {
 	  method: "POST",
 	  body: text,
 	  });
+		});
+	response = response.text().then(()=>resultElement.textContent = response;);
+	  });
 	 console.log(response);
-        
 	});
 </script>
 </body>

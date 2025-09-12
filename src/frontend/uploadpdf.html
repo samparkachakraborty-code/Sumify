@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sumify</title>
+    <meta name="description" content="Sumify is an AI powered smart text summarizer" />
+    <meta name="author" content="Sk Sakil Ali, Samparko Chakroborty" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="charset" content="UTF-8" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+15&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #3556FF;
+            margin: 0;
+        }
+
+        #main {
+            display: block;
+            grid-template-rows: auto;
+            margin: 0;
+            width: 100%;
+        }
+
+        #header {
+            font-family: "Jersey 15", "sans-serif";
+            color: white;
+            font-size: 150%;
+            grid-template-columns: 1fr 1fr 3fr;
+        }
+
+        #logo img {
+            width: 5vw;
+        }
+
+        #logo span {
+            flex-basis: content;
+            font-size: 5vw;
+        }
+
+        #mainBtns {
+            background-color: white;
+            margin: 0;
+            height: 100vh;
+            border-radius: 5% 5% 0 0;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            padding-top: 3vh;
+            width: 100%;
+        }
+
+        .uploadBtns {
+            margin-top: 12vh;
+            width: 20vw;
+            justify-self: center;
+            align-self: auto;
+            height: 7vw;
+            font-size: 1vw;
+            background-color: #F2F4FF;
+            border: 1px solid #E5E9FF;
+            border-radius: 10%;
+            color: #758CFF;
+            display: block;
+            grid-template-columns: 1fr 2fr;
+            align-items: center;
+        }
+
+        .uploadBtns img {
+            width: 90%;
+        }
+
+        #mainArea {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #pdfUpload {
+            margin-top: 10%;
+            width: 70%;
+            height: 40vh;
+            border: 2px dashed #758CFF;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background-color: #F2F4FF;
+        }
+
+        #pdfUpload:hover {
+            background-color: #E5E9FF;
+        }
+
+        #pdfUpload img {
+            width: 30%;
+            margin-bottom: 20px;
+        }
+
+        #pdfUpload p {
+            color: #758CFF;
+            font-size: 1.2vw;
+            text-align: center;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        #fileName {
+            margin-top: 10px;
+            color: #758CFF;
+            font-size: 1vw;
+        }
+
+        #sidebar {
+            display: grid;
+            grid-template-rows: fit-content(100%) fit-content(100%);
+            align-self: center;
+            justify-content: center;
+            background-color: white;
+            margin-top: 5vh;
+        }
+
+        #selection {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            justify-items: center;
+            align-items: top;
+            background-color: #3556FF;
+            color: white;
+            height: 50px;
+            border-radius: 25px;
+            border: 1px solid #3556FF;
+        }
+
+        #sidebar .uploadBtns {
+            background-color: #3556FF;
+            color: white;
+            height: 70px;
+            border-radius: 25px;
+            padding: 0 20px;
+            margin: 2vh 0;
+            border: none;
+        }
+
+        /* Fixed button styles */
+        .sbuttons {
+            width: 100%;
+            background-color: #3556FF;
+            color: white;
+            border: none;
+            height: 50px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .sbuttons:hover {
+            background-color: white;
+            color: #3556FF;
+            border: 1px solid #3556FF;
+        }
+
+        .sbuttons:active {
+            background-color: #f0f0f0;
+            color: #3556FF;
+            border: 1px solid #3556FF;
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 1000px) {
+            #logo span {
+                font-size: 9vw;
+            }
+
+            #hero {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto;
+                align-items: center;
+            }
+
+            #hero span {
+                grid-row: 2;
+                grid-column: 1;
+                font-size: 6vw;
+                width: 90%;
+                text-align: center;
+                justify-self: center;
+                margin-bottom: 2vh;
+            }
+
+            #hero img {
+                width: 100%;
+                justify-self: center;
+            }
+
+            #mainBtns {
+                width: 100%;
+                grid-template-columns: unset;
+                grid-template-rows: fit-content(100%) fit-content(100%);
+            }
+
+            .uploadBtns {
+                width: 80%;
+                font-size: 3vw;
+            }
+
+            #upPdf {
+                display: block;
+                width: 70%;
+            }
+
+            #sidebar .uploadBtns {
+                width: 100%;
+                background-color: #3556FF;
+                color: white;
+                height: 70px;
+            }
+
+            #pdfUpload {
+                height: 30vh;
+                width: 95%;
+            }
+
+            #pdfUpload p {
+                font-size: 3vw;
+            }
+
+            #fileName {
+                font-size: 2.5vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div id="header">
+            <header>
+                <div id="logo">
+                    <span style="margin-left: 0; padding-left:0;">Sumify</span>
+                </div>
+                <div id="leftMenu">
+                </div>
+            </header>
+                
+            <div id="mainBtns">
+                <div id="mainArea">
+                    <div id="pdfUpload">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM3NThDRkYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTQgMkg2YTIgMiAwIDAgMC0yIDJ2MTZhMiAyIDAgMCAwIDIgMmgxMmEyIDIgMCAwIDAgMi0yVjhaIj48L3BhdGg+PHBvbHlsaW5lIHBvaW50cz0iMTQgMiAxNCA4IDIwIDgiPjwvcG9seWxpbmU+PHBvbHlsaW5lIHBvaW50cz0iMTYgMTMgOCAxMyA4IDE4Ij48L3BvbHlsaW5lPjxwb2x5bGluZSBwb2ludHM9IjEwIDE2IDE2IDE2IDE2IDExIj48L3BvbHlsaW5lPjwvc3ZnPg==" alt="PDF Icon">
+                        <p>Click to upload a PDF file</p>
+                        <input type="file" id="fileInput" accept=".pdf">
+                    </div>
+                    <div id="fileName">No file selected</div>
+                </div>
+                <div id="sidebar">
+                    <div id="selection" class="uploadBtns">
+                        <button class="sbuttons">Short</button>
+                        <button class="sbuttons">Medium</button>
+                        <button class="sbuttons">Long</button>
+                    </div>
+                    <button id="upPdf" class="uploadBtns">Upload PDF To Summarize</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        let selectionState = "short";
+        const fileInput = document.getElementById("fileInput");
+        const pdfUpload = document.getElementById("pdfUpload");
+        const fileName = document.getElementById("fileName");
+        const uploadBtn = document.getElementById("upPdf");
+        const shortbtn = document.getElementById("selection").querySelectorAll("button")[0];
+        const mediumbtn = document.getElementById("selection").querySelectorAll("button")[1];
+        const longbtn = document.getElementById("selection").querySelectorAll("button")[2];
+        
+        // Set up event listeners for selection buttons
+        shortbtn.addEventListener("click", () => {
+            selectionState = "short";
+            shortbtn.style.backgroundColor = "white";
+            shortbtn.style.color = "#3556FF";
+            mediumbtn.style.backgroundColor = "#3556FF";
+            mediumbtn.style.color = "white";
+            longbtn.style.backgroundColor = "#3556FF";
+            longbtn.style.color = "white";
+        });
+        
+        mediumbtn.addEventListener("click", () => {
+            selectionState = "medium";
+            mediumbtn.style.backgroundColor = "white";
+            mediumbtn.style.color = "#3556FF";
+            shortbtn.style.backgroundColor = "#3556FF";
+            shortbtn.style.color = "white";
+            longbtn.style.backgroundColor = "#3556FF";
+            longbtn.style.color = "white";
+        });
+        
+        longbtn.addEventListener("click", () => {
+            selectionState = "long";
+            longbtn.style.backgroundColor = "white";
+            longbtn.style.color = "#3556FF";
+            mediumbtn.style.backgroundColor = "#3556FF";
+            mediumbtn.style.color = "white";
+            shortbtn.style.backgroundColor = "#3556FF";
+            shortbtn.style.color = "white";
+        });
+        
+        // Initialize the first button as selected
+        shortbtn.click();
+        
+        // File upload handling
+        pdfUpload.addEventListener("click", () => {
+            fileInput.click();
+        });
+        
+        fileInput.addEventListener("change", (event) => {
+            if (event.target.files.length > 0) {
+                const file = event.target.files[0];
+                fileName.textContent = `Selected: ${file.name}`;
+            }
+        });
+        
+        uploadBtn.addEventListener("click", async () => {
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert("Please select a PDF file first");
+                return;
+            }
+            
+            // Remove the main interface
+            document.getElementById("mainBtns").remove();
+            
+            // Create and show loading message
+            const resultElement = document.createElement("p");
+            document.body.appendChild(resultElement);
+            resultElement.textContent = "Good Things Takes Time, Relax While We Summarize Your PDF :)";
+            resultElement.style = "background-color: #F2F4FF; width: 70%; justify-self: center; align-self:center; padding: 10%; font-size: 150%; border: 1px solid #F2F4FF; border-radius: 20px;";
+            
+            // Create form data to send the file
+            const formData = new FormData();
+            formData.append("pdf", fileInput.files[0]);
+            formData.append("length", selectionState);
+            
+            try {
+                // Send the file to the server
+                const response = await fetch("http://127.0.0.1:5000/summarizepdf"+selectionState, {
+                    method: "POST",
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const summary = await response.text();
+                    resultElement.textContent = summary;
+                } else {
+                    resultElement.textContent = "Error: Could not process the PDF file.";
+                }
+            } catch (error) {
+                resultElement.textContent = "Error: Could not connect to the server.";
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
